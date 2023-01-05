@@ -27,7 +27,7 @@
 
                             <div class="form-group">
                                 <label for="referral_code"><i class="zmdi zmdi-accounts-alt" aria-hidden="true"></i></label>
-                                <input type="text" name="referral_code" id="referral_code" placeholder="Enter Referral code (optional)"value="{{ old('referral_code') }}" />
+                                <input type="text" name="referral_code" id="referral_code" placeholder="Enter Referral code (optional)"value="{{ $referral }}" />
                                 @error('referral_code')
                                 <span style="color:red">{{ $message }}</span>
                                 @enderror
@@ -35,14 +35,14 @@
 
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" id="password" placeholder="Password" value="{{ old('Password') }}"/>
+                                <input type="password" name="password" id="password" placeholder="Password" />
                                 @error('password')
                                 <span style="color:red">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"value="{{ old('re_pass') }}" />
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
                                 @error('re_pass')
                                 <span style="color:red">{{ $message }}</span>
                                 @enderror
@@ -54,13 +54,6 @@
                                 <span style="color:red">{{ $message }}</span>
                                 @enderror
                             </div>
-
-{{--
-                            <input type="submit"value="Register">
-                            <a class="btn btn-primary" href="#" role="button">Link</a> --}}
-                            {{-- <button type="submit" class="btn btn-primary">
-                                {{ __('registered') }}
-                            </button> --}}
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
                             </div>

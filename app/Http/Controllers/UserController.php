@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Network;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Network;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function loadregister(){
-
         return view('register');
     }
 
@@ -60,11 +61,45 @@ class UserController extends Controller
                 'referral_code'=> $referralCode,
             ]);
         }
-
         // return view('register');
+
+        $domain = URL::to('/');
+        $url = $domain.'/referral-register?ref='.$referralCode;
+
+        $data['url']=$url;
+        $data['name']=$request->name;
+        $data['email']=$request->email;
+        $data['password']=$request->password;
+        $data['title']='Registered';
+
+        Mail::send('emails.registerMail',['data'=> $data],function($message) use($data){
+
+            $message->to($data['email'])->subject($data['title']);
+
+        });
+
+
         return back()->with('success','Your Registration has been Successful!');
     }
 
+
+    public function loadreferralregister(Request $request){
+        // return view('404');
+        if(isset($request->ref)){
+
+            $referral = $request->ref;
+            $userData = User::where('referral_code',$referral)->get();
+            if(count($userData) > 0){
+                return view('referralRegister',compact('referral'));
+            }
+            else{
+                return view('404');
+            }
+        }
+        else{
+            return redirect('/');
+        }
+    }
 
     public function loadlogin(){
         return view('login');

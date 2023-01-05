@@ -20,4 +20,8 @@ Route::get('/', function () {
 
 Route::get('/register',[UserController::class,'loadregister'])->name('register');
 Route::post('/user-registered',[UserController::class,'registered'])->name('registered');
+Route::get('/referral-register',[UserController::class,'loadreferralregister'])->name('referralregister');
+// Route::get('/error',[UserController::class,'loadreferralregister'])->name('404');
+
+
 Route::get('/login',[UserController::class,'loadlogin'])->name('login');
