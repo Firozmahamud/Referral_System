@@ -27,7 +27,7 @@
 
                             <div class="form-group">
                                 <label for="referral_code"><i class="zmdi zmdi-accounts-alt" aria-hidden="true"></i></label>
-                                <input type="text" name="referral_code" id="referral_code" placeholder="Enter Referral code (optional)"value="{{ $referral }}" />
+                                <input type="text" name="referral_code" id="referral_code" placeholder="Enter Referral code (optional)"value="{{ $referral }}" style="pointer-events:none; background_color:lightgrey; "/>
                                 @error('referral_code')
                                 <span style="color:red">{{ $message }}</span>
                                 @enderror

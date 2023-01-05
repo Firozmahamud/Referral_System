@@ -21,6 +21,9 @@ Route::get('/', function () {
 Route::get('/register',[UserController::class,'loadregister'])->name('register');
 Route::post('/user-registered',[UserController::class,'registered'])->name('registered');
 Route::get('/referral-register',[UserController::class,'loadreferralregister'])->name('referralregister');
+Route::get('/email-verification/{token}',[UserController::class,'emailverification'])->name('emailverification');
+
+
 // Route::get('/error',[UserController::class,'loadreferralregister'])->name('404');
 
 

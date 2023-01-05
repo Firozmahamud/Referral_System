@@ -27,6 +27,7 @@ class UserController extends Controller
         ]);
 
         $referralCode = Str::random(10);
+        $token = Str::random(50);
 
         if(isset($request->referral_code)){
 
@@ -39,6 +40,7 @@ class UserController extends Controller
                     'email'=>$request->email,
                     'password'=> Hash::make($request->password),
                     'referral_code'=> $referralCode,
+                    'remember_token'=> $token,
                 ]);
                 Network::insert([
 
@@ -59,6 +61,8 @@ class UserController extends Controller
                 'email'=>$request->email,
                 'password'=> Hash::make($request->password),
                 'referral_code'=> $referralCode,
+                'remember_token'=> $token,
+
             ]);
         }
         // return view('register');
@@ -79,7 +83,24 @@ class UserController extends Controller
         });
 
 
-        return back()->with('success','Your Registration has been Successful!');
+        //verification mail send
+
+        $url = $domain.'/email-verification/'.$token;
+
+        $data['url']=$url;
+        $data['name']=$request->name;
+        $data['email']=$request->email;
+        $data['title']='verification email';
+
+
+        Mail::send('emails.verifyMail',['data'=> $data],function($message) use($data){
+
+            $message->to($data['email'])->subject($data['title']);
+
+        });
+
+
+        return back()->with('success','Your Registration has been Successful & please verify your mail !');
     }
 
 
@@ -98,6 +119,33 @@ class UserController extends Controller
         }
         else{
             return redirect('/');
+        }
+    }
+
+
+    public function emailverification($token){
+
+        $userData = User::where('remember_token',$token)->get();
+
+        if(count($userData) > 0){
+
+            if($userData[0]['is_verified'] == 1){
+              return view('emails.verified',['message'=>'your mail is already verified!']);
+            }
+
+            User::where('id',$userData[0]['id'])->update([
+
+                'is_verified' => 1,
+                'email_verified_at'=> date('Y-m-d H:i:s'),
+            ]);
+            return view('emails.verified',['message'=>'your'.$userData[0]['email'].'mail verified Successfully!']);
+
+        }
+
+        else{
+
+        return view('emails.verified',['message'=>'404 page not found !']);
+
         }
     }
 
