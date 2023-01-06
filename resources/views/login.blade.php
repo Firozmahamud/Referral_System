@@ -13,14 +13,31 @@
 
                     <div class="signin-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="login-form">
-                            <div class="form-group">
+                        <form action="{{ route('userlogin') }}" method="POST" class="register-form" id="login-form">
+                            @csrf
+
+                            @if (Session::has('error'))
+                            <p style="color: red">{{ Session::get('error') }}</p>
+
+                            @endif
+                            {{-- <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="your_name" id="your_name" placeholder="Your Name" required />
+                            </div> --}}
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" value="{{ old('email') }}"/>
+                                @error('email')
+                                <span style="color:red">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" required/>
+                                {{-- <input type="password" name="your_pass" id="your_pass" placeholder="Password" required/> --}}
+                                <input type="password" name="password" id="password" placeholder="Password" value="{{ old('Password') }}"/>
+                                @error('password')
+                                <span style="color:red">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />

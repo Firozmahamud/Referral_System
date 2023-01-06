@@ -6,9 +6,11 @@ use App\Models\User;
 use App\Models\Network;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -152,4 +154,37 @@ class UserController extends Controller
     public function loadlogin(){
         return view('login');
     }
+
+
+    public function userlogin(Request $request){
+        // return view('login');
+        $request->validate([
+
+            'email'=>'required|string|email',
+            'password'=> 'required',
+
+        ]);
+
+        $userData = User::where('email',$request->email)->first();
+
+        if(!empty($userData)){
+            if($userData->is_verified == 0){
+                return back()->with('error','please verify your email !');
+            }
+        }
+
+        $userCredential = $request->only('email','password');
+        if(Auth::attempt($userCredential)){
+            return redirect('/dashboard');
+        }
+        else{
+            return back()->with('error','email or password is incorrect');
+        }
+
+    }
+
+    public function loaddashboard(){
+        return ('welcome to the Dashboard');
+    }
+
 }

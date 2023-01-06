@@ -15,7 +15,8 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect('/login');
 });
 
 Route::get('/register',[UserController::class,'loadregister'])->name('register');
@@ -28,3 +29,7 @@ Route::get('/email-verification/{token}',[UserController::class,'emailverificati
 
 
 Route::get('/login',[UserController::class,'loadlogin'])->name('login');
+Route::post('/login',[UserController::class,'userlogin'])->name('userlogin');
+
+Route::get('/dashboard',[UserController::class,'loaddashboard'])->name('dashboard');
+
