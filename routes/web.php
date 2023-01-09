@@ -35,8 +35,9 @@ Route::group(['middleware'=> ['is_login']],function () {
 });
 
 Route::group(['middleware'=> ['is_logout']],function () {
-    
+
     Route::get('/dashboard', [UserController::class,'loaddashboard'])->name('dashboard');
+    Route::get('/referralTrack', [UserController::class,'loadreferralTrack'])->name('referralTrack');
 
     Route::get('/logout', [UserController::class,'logout'])->name('logout');
 

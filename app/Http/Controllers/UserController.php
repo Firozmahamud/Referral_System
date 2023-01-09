@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Network;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -202,6 +203,32 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect('login');
+    }
+
+
+    public function loadreferralTrack(){
+        $networkCount = Network::where('parent_user_id',Auth::user()->id)->orWhere('user_id',Auth::user()->id)->count();
+
+        $dateLabels =[];
+        $dateData =[];
+
+        for($i = 30; $i >=0; $i--){
+            $dateLabels[] = Carbon::now()->subDays($i)->format('d-m-Y');
+
+            // $dateLabels[] = $date;
+            $dateData[] = Network::whereDate('created_at',Carbon::now()->subDays($i)->format('Y-m-d'))
+            ->where('parent_user_id',Auth::user()->id)->count();
+
+        }
+
+        $dateLabels = json_encode($dateLabels);
+        $dateData = json_encode($dateData);
+
+        // echo"<pre>";
+        // print_r($dateLabels);
+        // die;
+
+        return view('dashboard.referralTrack',compact('networkCount','dateLabels','dateData'));
     }
 
 }
