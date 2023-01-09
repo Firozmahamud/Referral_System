@@ -10,6 +10,40 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="{{asset('asset/dashboard')}}/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+
+            .acoloir{
+                background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red);
+              -webkit-background-clip: text;
+              -moz-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+            .multicolortext {
+              /* background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red);
+              -webkit-background-clip: text;
+              -moz-background-clip: text;
+              background-clip: text;
+              color: transparent; */
+
+              font-size: 1vw; /* make our h1 tag larger */
+                      font-family: sans-serif; /* choosing our font */
+                      background: linear-gradient(to right, rgba(255, 215, 255, 0) 0%, rgba(225, 255, 255, 0.5) 20%, rgba(255, 255, 255, 0) 61%), linear-gradient(rgb(97, 183, 217) 52%, rgb(224, 246, 255) 60%, rgb(78, 99, 132) 61%); /* you can change the colors based on your preference */
+                      background-clip: text; /*it defines how far the background should extend within an element, here we set it to text */
+                      -webkit-background-clip: text; /*for browsers compatibility */
+                      -webkit-text-fill-color: transparent; /* specifies the fill color of text characters. We use transparent to use the background as our text fill  */
+                      animation: wave 2000ms ease alternate infinite;
+                      transition: all 0.4s ease;
+                    }
+                    @keyframes wave {
+                      0% {
+                        background-position: 0 0;
+                      }
+                      100% {
+                        background-position: 50vw 10px;
+                      }
+            }
+          </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -19,19 +53,36 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <!-- <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div> -->
+                 <div class="input-group" style="text-align: center">
+                    {{-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> --}}
+                    {{-- <img srcset="https://img.icons8.com/fluency/2x/popular-woman.png 2x" alt="Popular woman icon" loading="lazy"> --}}
+                    {{-- <img srcset="https://img.icons8.com/fluency/2x/popular-man.png 2x" alt="fluent" loading="lazy"> --}}
+                    <span class="multicolortext"> Your Total Point is {{ $networkCount*10 }} </span>
+                    {{-- <a style="color: white" >{{ $networkCount*10 }} <br>Points</a> --}}
+                </div>
+
+
+
+
+
+
+
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{-- <i class="fas fa-user fa-fw"></i> --}}
+                    <img srcset="https://img.icons8.com/fluency/2x/popular-man.png 2x" alt="fluent" loading="lazy">
+
+
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <!-- <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li> -->
+                        <li><a class="dropdown-item acoloir" href="#!">{{ Auth::user()->name }}</a></li>
+                        {{-- <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>{{ Auth::user()->name }}</li> --}}
                         <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                     </ul>
                 </li>
@@ -43,7 +94,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link acoloir" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>

@@ -5,7 +5,7 @@
 
 <h1 class="mt-4">Dashboard</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Dashboard</li>
+    {{-- <li class="breadcrumb-item active">Dashboard</li> --}}
 </ol>
 <div class="row">
     <div class="col-xl-3 col-md-6">
@@ -46,7 +46,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+{{-- <div class="row">
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
@@ -65,7 +65,91 @@
             <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
         </div>
     </div>
-</div>
+</div> --}}
+
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                DataTable Example
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Verified</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Verified</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            {{-- <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td> --}}
+
+                                            @if (count($networkData) > 0)
+                                                {{-- @foreach ($networkData as $key=>$network)
+                                                <tr>
+                                                    <td>{{$key+1}}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                                </tr>
+
+
+                                                @endforeach --}}
+                                                @php
+                                                    $x=1;
+                                                @endphp
+
+                                                @foreach ($networkData as $network)
+                                                <tr>
+                                                    <td>{{$x++}}</td>
+                                                    <td>{{ $network->user->name }}</td>
+                                                    <td>{{  $network->user->email }}</td>
+                                                    <td>
+                                                        @if ( $network->user->is_verified == 0)
+                                                        <b style="color: red"> not verified</b>
+                                                        @else
+                                                        <b style="color:green"> verified</b>
+
+                                                        @endif
+                                                    </td>
+
+                                                </tr>
+
+
+                                                @endforeach
+
+                                            @else
+                                            <tr>
+                                                <th colspan="4" style="text-align: center">No Referral Found!
+
+                                                </th>
+                                            </tr>
+
+                                            @endif
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
 
 @endsection

@@ -13,4 +13,9 @@ class Network extends Model
         'user_id',
         'parent_user_id	',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 }
