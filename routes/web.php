@@ -19,17 +19,27 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/register',[UserController::class,'loadregister'])->name('register');
-Route::post('/user-registered',[UserController::class,'registered'])->name('registered');
-Route::get('/referral-register',[UserController::class,'loadreferralregister'])->name('referralregister');
-Route::get('/email-verification/{token}',[UserController::class,'emailverification'])->name('emailverification');
+Route::group(['middleware'=> ['is_login']],function () {
+    Route::get('/register',[UserController::class,'loadregister'])->name('register');
+    Route::post('/user-registered',[UserController::class,'registered'])->name('registered');
+    Route::get('/referral-register',[UserController::class,'loadreferralregister'])->name('referralregister');
+    Route::get('/email-verification/{token}',[UserController::class,'emailverification'])->name('emailverification');
 
 
-// Route::get('/error',[UserController::class,'loadreferralregister'])->name('404');
+    // Route::get('/error',[UserController::class,'loadreferralregister'])->name('404');
 
 
-Route::get('/login',[UserController::class,'loadlogin'])->name('login');
-Route::post('/login',[UserController::class,'userlogin'])->name('userlogin');
+    Route::get('/login',[UserController::class,'loadlogin'])->name('login');
+    Route::post('/login',[UserController::class,'userlogin'])->name('userlogin');
 
-Route::get('/dashboard',[UserController::class,'loaddashboard'])->name('dashboard');
+});
+
+Route::group(['middleware'=> ['is_logout']],function () {
+    
+    Route::get('/dashboard', [UserController::class,'loaddashboard'])->name('dashboard');
+
+    Route::get('/logout', [UserController::class,'logout'])->name('logout');
+
+
+});
 
