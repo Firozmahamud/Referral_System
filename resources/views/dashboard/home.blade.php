@@ -3,8 +3,14 @@
 
 @section('content')
 
+
+
 <h1 class="mt-4">Dashboard</h1>
 <ol class="breadcrumb mb-4">
+    <h6 style="cursor: pointer" data-code="{{ Auth::user()->referral_code }}" class="copy">
+        <span class="fa fa-copy mr-1"></span>
+        Copy Referral Link
+    </h6>
     {{-- <li class="breadcrumb-item active">Dashboard</li> --}}
 </ol>
 <div class="row">
@@ -150,6 +156,31 @@
                                 </table>
                             </div>
                         </div>
+
+
+<script>
+    $(document).ready(function(){
+        $('.copy').click(function(){
+            $(this).parent().prepend('<span style="color:blue;" class="copied_text">Coppied</span>');
+
+
+            var code = $(this).attr('data-code');
+            var url = "{{ URL::to('/') }}/referral-register?ref="+code;
+
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(url).select();
+            document.execCommand("copy");
+            $temp.remove();
+
+            setTimeout(() => {
+                $('.copied_text').remove();
+
+            }, 800);
+        });
+
+    });
+</script>
 
 
 @endsection
