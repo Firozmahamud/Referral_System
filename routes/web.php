@@ -38,6 +38,7 @@ Route::group(['middleware'=> ['is_logout']],function () {
 
     Route::get('/dashboard', [UserController::class,'loaddashboard'])->name('dashboard');
     Route::get('/referralTrack', [UserController::class,'loadreferralTrack'])->name('referralTrack');
+    Route::get('/delete-account', [UserController::class,'deleteAccount'])->name('deleteAccount');
 
     Route::get('/logout', [UserController::class,'logout'])->name('logout');
 

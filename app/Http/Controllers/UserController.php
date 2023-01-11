@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Share;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Network;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -190,7 +191,21 @@ class UserController extends Controller
         // return ('welcome to the Dashboard');
 
         $networkData = Network::with('user')->where('parent_user_id',Auth::user()->id)->get();
-        return view('dashboard.home',compact('networkCount','networkData'));
+
+        $shareComponent = \Share::page(
+            URL::to('/').'/referral-register?ref='.Auth::user()->referral_code,
+            'Share and Earn Points by Referral Link',
+        )
+        ->facebook()
+        ->twitter()
+        ->linkedin()
+        ->telegram()
+        ->whatsapp()
+        ->reddit();
+
+
+
+        return view('dashboard.home',compact('networkCount','networkData',"shareComponent"));
     }
 
     public function logout(Request $request){
@@ -229,6 +244,21 @@ class UserController extends Controller
         // die;
 
         return view('dashboard.referralTrack',compact('networkCount','dateLabels','dateData'));
+    }
+
+    public function deleteAccount(Request $request){
+
+        try{
+
+        User::where('id',Auth::user()->id)->delete();
+        $request->session()->flush();
+        Auth::logout();
+        return response()->json(['success'=>true]);
+
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+        }
     }
 
 }

@@ -13,6 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
         <style>
 
@@ -103,8 +104,8 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link acoloir" href="index.html">
+                            {{-- <div class="sb-sidenav-menu-heading">Core</div> --}}
+                            <a class="nav-link acoloir" href="{{ route('dashboard') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -156,6 +157,13 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Referral Track
                             </a>
+
+                                <a class="trash nav-link" href="#" >
+                                    <div class="sb-nav-link-icon"><i class="fas fa-trash mr-3"></i></div>
+                                    Delete user
+                                </a>
+
+
                             {{-- <a class="nav-link" href="tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
@@ -685,5 +693,28 @@
         <script src="{{asset('asset/dashboard')}}/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="{{asset('asset/dashboard')}}/js/datatables-simple-demo.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('.trash').click(function(){
+
+                    $.ajax({
+
+                        url:"{{ route('deleteAccount') }}",
+                        type:"GET",
+                        success:function(response){
+                            if(response.success){
+                                location.reload();
+                            }
+                            else{
+                                alert(response.msg);
+                            }
+                        }
+                    });
+
+                });
+            });
+        </script>
     </body>
 </html>

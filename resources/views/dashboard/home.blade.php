@@ -3,14 +3,31 @@
 
 @section('content')
 
+<style>
+    div#social-links ul li{
+        display: inline-block;
+    }
+    div#social-links ul li a{
+        padding: 5px;
+        margin: 1px;
+        font-size: 20px;
+        color: #222;
+        /* background-color: #ccc; */
+
+    }
+    </style>
 
 
 <h1 class="mt-4">Dashboard</h1>
+
 <ol class="breadcrumb mb-4">
     <h6 style="cursor: pointer" data-code="{{ Auth::user()->referral_code }}" class="copy">
         <span class="fa fa-copy mr-1"></span>
-        Copy Referral Link
-    </h6>
+        Copy Referral Link &nbsp;
+</h6>or share your link via:<h6>
+    {!! $shareComponent!!}
+
+</h6>
     {{-- <li class="breadcrumb-item active">Dashboard</li> --}}
 </ol>
 <div class="row">
